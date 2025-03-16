@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Float, Boolean, Date, Time, ForeignKey, Text
+from sqlalchemy import Column, String, Integer, Float, Boolean, Date, Time, ForeignKey, Text,  Numeric, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 # from enum import Enum as PyEnum
@@ -98,8 +98,8 @@ class AnticipatedMonetaryTotal(Base):
     __tablename__ = 'anticipated_monetary_total'
     id = Column(Integer, primary_key=True, autoincrement=True)
     currency_id = Column(String)
-    line_extension_amount = Column(Decimal)
-    payable_amount = Column(Decimal)
+    line_extension_amount = Column(Numeric(18, 2))
+    payable_amount = Column(Numeric(18, 2))
 
 class TransactionConditions(Base):
     __tablename__ = 'transaction_conditions'
@@ -115,7 +115,7 @@ class Price(Base):
     __tablename__ = 'price'
     id = Column(Integer, primary_key=True, autoincrement=True)
     currency_id = Column(String)
-    price_amount = Column(Decimal)
+    price_amount = Column(Numeric(18, 2))
     unit_code = Column(String)
     base_quantity = Column(Float)
 
@@ -149,8 +149,8 @@ class LineItem(Base):
     unit_code = Column(String)
     quantity = Column(Float)
     currency_id = Column(String)
-    line_extension_amount = Column(Decimal)
-    total_tax_amount = Column(Decimal)
+    line_extension_amount = Column(Numeric(18, 2))
+    total_tax_amount = Column(Numeric(18, 2))
     price_id = Column(Integer, ForeignKey('price.id'))
     item_id = Column(Integer, ForeignKey('item.id'))
     price = relationship('Price')
