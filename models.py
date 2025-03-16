@@ -186,6 +186,7 @@ class DespatchAdvice(BaseModel):
     despatch_advice_type_code: str
     note: Optional[str] = None
     order_reference: Order
-    despatch_supplier_party: BuyerCustomerParty
+    despatch_supplier_party: SellerSupplierParty
+    delivery_customer_party: BuyerCustomerParty
     shipment: Shipment
     despatch_line: DespatchLine
