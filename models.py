@@ -6,8 +6,8 @@ from datetime import date, time
 
 class Contact(BaseModel):
     name: str
-    telephone: str
-    telefax: str
+    telephone: int
+    telefax: int
     email: str
 
 
@@ -18,7 +18,7 @@ class TaxScheme(BaseModel):
 
 class PartyTaxScheme(BaseModel):
     registration_name: str
-    company_id: str
+    company_id: int
     exemption_reason: Optional[str] = None
     tax_scheme: TaxScheme
 
@@ -90,7 +90,7 @@ class Price(BaseModel):
     
 
 class ItemIdentification(BaseModel):
-    id: str
+    id: int
 
 class ItemInstance(BaseModel):
     lot_number_id: int
@@ -105,7 +105,7 @@ class Item(BaseModel):
 
 
 class LineItem(BaseModel):
-    id: str
+    id: int
     sales_order_id: str
     line_status_code: str
     unit_code: str
@@ -123,7 +123,7 @@ class OrderLine(BaseModel):
 
 
 class Order(BaseModel):
-    ubl_version_id: str
+    ubl_version_id: float
     customization_id: str
     profile_id: str
     id: str
@@ -174,13 +174,13 @@ class Shipment(BaseModel):
 
 
 class DespatchAdvice(BaseModel):
-    ubl_version_id: str
+    ubl_version_id: float
     customization_id: str
     profile_id: str
-    id: str
-    sales_order_id: str
+    id: int
     copy_indicator: bool
     uuid: str
+    issue_date: date
     document_status_code: str
     despatch_advice_type_code: str
     note: Optional[str] = None
