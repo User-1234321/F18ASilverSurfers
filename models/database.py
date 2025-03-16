@@ -11,7 +11,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 class Contact(Base):
-    __tablename__ = "contacts"
+    __tablename__ = "contact"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
@@ -20,18 +20,18 @@ class Contact(Base):
     email = Column(String)
 
 class TaxScheme(Base):
-    __tablename__ = "tax_schemes"
+    __tablename__ = "tax_scheme"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     tax_type_code = Column(String)
 
 class PartyTaxScheme(Base):
-    __tablename__ = "party_tax_schemes"
+    __tablename__ = "party_tax_scheme"
     id = Column(Integer, primary_key=True, autoincrement=True)
     registration_name = Column(String)
     company_id = Column(String)
     exemption_reason = Column(String)
-    tax_scheme_id = Column(Integer, ForeignKey("tax_schemes.id"))
+    tax_scheme_id = Column(Integer, ForeignKey("tax_scheme.id"))
     tax_scheme = relationship("TaxScheme")
 
 class Address(Base):
@@ -47,12 +47,12 @@ class Address(Base):
     country_code = Column(String)
 
 class Party(Base):
-    __tablename__ = "parties"
+    __tablename__ = "party"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     postal_address_id = Column(Integer, ForeignKey("address.id"))
-    tax_scheme_id = Column(Integer, ForeignKey("party_tax_schemes.id"))
-    contact_id = Column(Integer, ForeignKey("contacts.id"))
+    tax_scheme_id = Column(Integer, ForeignKey("party_tax_scheme.id"))
+    contact_id = Column(Integer, ForeignKey("contact.id"))
     postal_address = relationship("Address")
     tax_scheme = relationship("PartyTaxScheme")
     contact = relationship("Contact")
@@ -164,7 +164,7 @@ class OrderLine(Base):
     line_item = relationship('LineItem')  
 
 class Order(Base):
-    __tablename__ = 'orders'
+    __tablename__ = 'order'
     id = Column(String, primary_key=True)
     ubl_version_id = Column(String)
     customization_id = Column(String)
