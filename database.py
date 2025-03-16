@@ -1,6 +1,5 @@
 from sqlalchemy import Column, String, Integer, Float, Boolean, Date, Time, ForeignKey, Text,  Numeric, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 # from enum import Enum as PyEnum
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"  
