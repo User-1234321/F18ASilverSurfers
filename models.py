@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import date, time
+from decimal import Decimal
 
 # Models for the UBL Order
 
@@ -70,8 +71,8 @@ class Delivery(BaseModel):
 
 class AnticipatedMonetaryTotal(BaseModel):
     currency_id: str
-    line_extension_amount: float
-    payable_amount: float
+    line_extension_amount: Decimal
+    payable_amount: Decimal
 
 
 class TransactionConditions(BaseModel):
@@ -84,9 +85,9 @@ class DeliveryTerms(BaseModel):
 
 class Price(BaseModel):
     currency_id: str
-    price_amount: float
+    price_amount: Decimal
     unit_code: str
-    base_quantity: float
+    base_quantity: int
     
 
 class ItemIdentification(BaseModel):
@@ -109,10 +110,10 @@ class LineItem(BaseModel):
     sales_order_id: str
     line_status_code: str
     unit_code: str
-    quantity: float
+    quantity: int
     currency_id: str
-    line_extension_amount: float
-    total_tax_amount: float
+    line_extension_amount: Decimal
+    total_tax_amount: Decimal
     price: Price
     item: Item
 
@@ -160,8 +161,8 @@ class DespatchLine(BaseModel):
     note: Optional[str] = None
     line_status_code: str
     unit_code: str
-    delivered_quantity: float
-    backorder_quantity: float
+    delivered_quantity: int
+    backorder_quantity: int
     backorder_reason: str
     order_line_reference: OrderLineReference
     item: Item
@@ -185,6 +186,7 @@ class DespatchAdvice(BaseModel):
     despatch_advice_type_code: str
     note: Optional[str] = None
     order_reference: Order
-    despatch_supplier_party: BuyerCustomerParty
+    despatch_supplier_party: SellerSupplierParty
+    delivery_customer_party: BuyerCustomerParty
     shipment: Shipment
     despatch_line: DespatchLine
