@@ -39,7 +39,16 @@ pydantic: Tool for Data validation and schema definition
 
 dicttoxml: Tool for translating python dicts into XML
 
+6.(Optional) If Pip install not working:
 
+Create a virtual environment using this command
+```
+python -m venv venv
+```
+and then activate the virtual environment
+```
+source venv/bin/activate
+```
 And that is all to the installation
 
 ## Use Guide
