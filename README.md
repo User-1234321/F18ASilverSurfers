@@ -20,25 +20,36 @@ if this doesn't appear then run:
 ```
 python -m ensurepip --upgrade
 ```
-verify installation by checking the version using command above.
+verify installation:
+```
+pip --version
+```
 
 5. install necessary libaries with:
 ```
 pip install fastapi uvicorn pydantic dicttoxml
 ```
-brief explanation of each liberally
-...
+brief explanation of each libary
+
+fastapi: The api framework for our backend logic
+
+Uvicorn: Tool use to run our api
+
+pydantic: Tool for Data validation and schema definition
+
+dicttoxml: Tool for translating python dicts into XML
 
 
 And that is all to the installation
 
 ## Use Guide
-1. Using terminal commands, cd into the repository
+1. Using terminal commands, move into the repository folder
 
-If you don't have the repository, use 
+If you don't have the repository, run:
 ```
-git clone
+git clone https://nw-syd-gitlab.cseunsw.tech/z5477445/f18asilversurfers.git
 ```
+Note: only run in the desired location/folder as it will create a folder for the repository
 
 2. Run the api with:
 ```
@@ -54,11 +65,13 @@ INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
 copy the link and paste it on any browser
 
 4. Using the api
+
 At first it will display nothing. To fix add /docs to the end of the link
 This will open up the swagger UI
 
 From this you are able to either read the roots and edit the url or use them straight on the UI
 Press any of the existing roots and press try out. 
+
 For any requiring a orderID, the id 1 is the only one that can be test at them moment. 
 All other IDs do not exist and will respond with an error
 
