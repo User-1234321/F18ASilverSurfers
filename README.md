@@ -1,5 +1,38 @@
 # F18ASilverSurfers
 
+##Installation Guide
+1. Download Python 3.11.2 from the official website:  
+   👉 https://www.python.org/downloads  
+2. Run the installer and **make sure to check** ✅ “Add Python to PATH”.
+3. After installation, open a terminal and verify:
+```
+python --version
+```
+
+4. Verify that pip is installed:
+```
+pip --version
+```
+it should look like this:
+pip xx.x.x from ...
+
+if this doesn't appear then run:
+```
+python -m ensurepip --upgrade
+```
+verify installation by checking the version using command above.
+
+5. install necessary libaries with:
+```
+pip install fastapi uvicorn pydantic dicttoxml
+```
+brief explanation of each liberally
+...
+
+
+
+
+
 
 
 ## Getting started
