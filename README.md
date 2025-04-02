@@ -86,6 +86,21 @@ All other IDs do not exist and will respond with an error
 
 That is all to the use guide
 
+### Using Unit test
+Prerequisite:
+You will need to pip install:
+- httpx
+- pytest
+
+1. ensure that you have run git pull and are up to date with the repository
+make sure the the file **test_api.py** exist on your local machine
+
+2. In terminal, run:
+```
+pytest -s test_api.py
+```
+this will run the unit test.  
+Note: ignore the message related to pydantics
 
 ## Getting started
 
