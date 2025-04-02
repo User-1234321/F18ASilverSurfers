@@ -1,5 +1,90 @@
 # F18ASilverSurfers
 
+## Installation Guide
+1. Download Python 3.11.2 from the official website:  
+   👉 https://www.python.org/downloads  
+2. Run the installer and **make sure to check** ✅ “Add Python to PATH”.
+3. After installation, open a terminal and verify:
+```
+python --version
+```
+
+4. Verify that pip is installed:
+```
+pip --version
+```
+it should look like this:
+pip xx.x.x from ...
+
+if this doesn't appear then run:
+```
+python -m ensurepip --upgrade
+```
+verify installation:
+```
+pip --version
+```
+
+5. install necessary libaries with:
+```
+pip install fastapi uvicorn pydantic dicttoxml
+```
+brief explanation of each libary
+
+fastapi: The api framework for our backend logic
+
+Uvicorn: Tool use to run our api
+
+pydantic: Tool for Data validation and schema definition
+
+dicttoxml: Tool for translating python dicts into XML
+
+6.(Optional) If Pip install not working:
+
+Create a virtual environment using this command
+```
+python -m venv venv
+```
+and then activate the virtual environment
+```
+source venv/bin/activate
+```
+And that is all to the installation
+
+## Use Guide
+1. Using terminal commands, move into the repository folder
+
+If you don't have the repository, run:
+```
+git clone https://nw-syd-gitlab.cseunsw.tech/z5477445/f18asilversurfers.git
+```
+Note: only run in the desired location/folder as it will create a folder for the repository
+
+2. Run the api with:
+```
+uvicorn main:app --reload
+```
+This will start up the api on the local machine
+
+3. Grab link from terminal
+there are lines that say INFO, one of which look like this:
+```
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+```
+copy the link and paste it on any browser
+
+4. Using the api
+
+At first it will display nothing. To fix add /docs to the end of the link
+This will open up the swagger UI
+
+From this you are able to either read the roots and edit the url or use them straight on the UI
+Press any of the existing roots and press try out. 
+
+For any requiring a orderID, the id 1 is the only one that can be test at them moment. 
+All other IDs do not exist and will respond with an error
+
+That is all to the use guide
 
 
 ## Getting started
