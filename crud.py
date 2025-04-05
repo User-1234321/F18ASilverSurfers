@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from datetime import date
-from f18asilversurfers.routes.order import Order
+from routes.order import Order
 def create_order(db: Session, customer_name: str, order_date: date):
     order = Order(customer_name=customer_name, order_date=order_date)
     db.add(order)

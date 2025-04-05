@@ -2,8 +2,8 @@ from contextlib import asynccontextmanager
 from typing import Optional
 from fastapi import APIRouter, FastAPI, HTTPException, Depends, Header, Request
 from sqlalchemy.orm import Session
-from f18asilversurfers.database import SessionLocal
-from f18asilversurfers.models import order_models
+from database import SessionLocal
+from models import order_models
 
 router = APIRouter()
 

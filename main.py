@@ -4,10 +4,10 @@ from sqlalchemy.exc import IntegrityError
 from fastapi import FastAPI
 # from f18asilversurfers.add_mock import add_mock_order_to_db
 import uvicorn
-from f18asilversurfers.database import init_db, SessionLocal
-from f18asilversurfers.database import engine, SessionLocal
-from f18asilversurfers.models import order_models
-from f18asilversurfers.routes import order
+from database import init_db, SessionLocal
+from database import engine, SessionLocal
+from models import order_models
+from routes import order
 
 
 

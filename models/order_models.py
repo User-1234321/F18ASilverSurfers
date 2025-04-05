@@ -60,7 +60,7 @@
 #     order_line: OrderLine
 
 from sqlalchemy import Column, String, Integer
-from f18asilversurfers.database import Base
+from database import Base
 
 class Order(Base):
     __tablename__ = "orders"

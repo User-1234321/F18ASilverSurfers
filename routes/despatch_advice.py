@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Response
-from f18asilversurfers.models.despatch_advice_models import DespatchAdvice
+from models.despatch_advice_models import DespatchAdvice
 from dicttoxml import dicttoxml
-from f18asilversurfers.data.mock_orders import MOCK_ORDERS
+from data.mock_orders import MOCK_ORDERS
 
 router = APIRouter()
 
