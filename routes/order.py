@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from data.mock_orders import MOCK_ORDERS
+from f18asilversurfers.data.mock_orders import MOCK_ORDERS
 
 router = APIRouter()
 
