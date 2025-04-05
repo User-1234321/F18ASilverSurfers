@@ -1,82 +1,69 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.orm import sessionmaker, relationship, declarative_base, Mapped
-from typing import Optional
+# from pydantic import BaseModel
+# from typing import Optional
 
-Base = declarative_base()
+# class ContactInfo(BaseModel):
+#     name: str
+#     telephone: str
+#     email: str
 
-class ContactInfo(Base):
-    __tablename__ = 'contact_info'
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str]
-    telephone: Mapped[str]
-    email: Mapped[str]
+# class TaxInfo(BaseModel):
+#     reg_name: str
+#     vat_gst_eori_tin_number: str
+#     exemption_reason: Optional[str] = None
+#     tax_scheme: str
 
-class TaxInfo(Base):
-    __tablename__ = 'tax_info'
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    reg_name: Mapped[str]
-    vat_gst_eori_tin_number: Mapped[str]
-    exemption_reason: Optional[Mapped[str]] = None  # Correctly using Optional with Mapped
-    tax_scheme: Mapped[str]
+# class PostalAddress(BaseModel):
+#     street_name: str
+#     building_number: str
+#     city_name: str
+#     postal_zone: str
+#     country_sub_entity: str
+#     address_line: str
+#     country: str
 
-class PostalAddress(Base):
-    __tablename__ = 'postal_address'
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    street_name: Mapped[str]
-    building_number: Mapped[str]
-    city_name: Mapped[str]
-    postal_zone: Mapped[str]
-    country_sub_entity: Mapped[str]
-    address_line: Mapped[str]
-    country: Mapped[str]
+# class BuyerSellerInfo(BaseModel):
+#     id: str
+#     postal_address: PostalAddress
+#     contact: ContactInfo
+#     tax: TaxInfo
 
-class BuyerSellerInfo(Base):
-    __tablename__ = 'buyer_seller_info'
-    
-    id = Column(String, primary_key=True)
-    postal_address: Mapped[PostalAddress]  # Correctly using Mapped for relationships
-    contact: Mapped[ContactInfo]
-    tax: Mapped[TaxInfo]
+# class DeliveryInfo(BaseModel):
+#     postal_address: PostalAddress
+#     start_date: str
+#     start_time: str
+#     end_date: str
+#     end_time: str
 
-class DeliveryInfo(Base):
-    __tablename__ = 'delivery_info'
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    postal_address: Mapped[PostalAddress]
-    start_date: Mapped[str]
-    start_time: Mapped[str]
-    end_date: Mapped[str]
-    end_time: Mapped[str]
+# class OrderLine(BaseModel):
+#     note: Optional[str] = None
+#     id: int
+#     sales_orders: str
+#     line_status_code: str
+#     quantity_unit: int
+#     line_extension_amount: int
+#     total_tax_amount: int
+#     price: int
+#     description: str
+#     name: str
+#     buyers_item_id: str
+#     sellers_item_id: str
 
-class OrderLine(Base):
-    __tablename__ = 'order_line'
-    
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    sales_orders: Mapped[str]
-    line_status_code: Mapped[str]
-    quantity_unit: Mapped[int]
-    line_extension_amount: Mapped[int]
-    total_tax_amount: Mapped[int]
-    price: Mapped[int]
-    description: Mapped[str]
-    name: Mapped[str]
-    buyers_item_id: Mapped[str]
-    sellers_item_id: Mapped[str]
+# class Order(BaseModel):
+#     order_id: int
+#     buyer: BuyerSellerInfo
+#     seller: BuyerSellerInfo
+#     delivery: DeliveryInfo
+#     delivery_terms: str
+#     transaction_conditions: str
+#     transaction_method: str
+#     total_owed: float
+#     order_line: OrderLine
+
+from sqlalchemy import Column, String, Integer
+from f18asilversurfers.database import Base
 
 class Order(Base):
-    __tablename__ = 'orders'
-    
-    order_id = Column(Integer, primary_key=True)
-    buyer_id = Column(String, ForeignKey('buyer_seller_info.id'))
-    seller_id = Column(String, ForeignKey('buyer_seller_info.id'))
-    delivery_id = Column(Integer, ForeignKey('delivery_info.id'))
-    
-    buyer: Mapped[BuyerSellerInfo] = relationship("BuyerSellerInfo", foreign_keys=[buyer_id])
-    seller: Mapped[BuyerSellerInfo] = relationship("BuyerSellerInfo", foreign_keys=[seller_id])
-    delivery: Mapped[DeliveryInfo] = relationship("DeliveryInfo", back_populates="orders")
-    order_lines: Mapped[list[OrderLine]] = relationship("OrderLine", back_populates="order")
-
-# Ensure that your database models reflect this updated code structure.
+    __tablename__ = "orders"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True)
+    purchase = Column(String)

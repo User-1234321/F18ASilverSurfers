@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends
+from contextlib import asynccontextmanager
+from typing import Optional
+from fastapi import APIRouter, FastAPI, HTTPException, Depends, Header, Request
 from sqlalchemy.orm import Session
 from f18asilversurfers.database import SessionLocal
-from f18asilversurfers.models import Order
-from f18asilversurfers.models.order_models import OrderLine
+from f18asilversurfers.models import order_models
 
 router = APIRouter()
 
@@ -14,16 +15,23 @@ def get_db():
     finally:
         db.close()
 
+
 @router.get("/orders")
-def get_all_orders(db: Session = Depends(get_db)):
-    """Fetch all orders from the database"""
-    orders = db.query(Order).all()
-    return orders
+def get_all_orders(
+    request: Request,
+    hx_request: Optional[str] = Header(None),
+    db: Session = Depends(get_db)
+):
+    """fake shit for testing"""
+    orders = db.query(order_models.Order).all()
+    print(orders)
+    return orders  # <== Add this
+
 
 @router.get("/order/{order_id}")
 def get_order(order_id: int, db: Session = Depends(get_db)):
     """Fetch a single order by ID from the database"""
-    order = db.query(Order).filter(Order.order_id == order_id).first()
+    order = db.query(order_models.Order).filter(order_models.Order.id == order_id).first()  # Corrected here
     if order:
         return order
     raise HTTPException(status_code=404, detail="Order not found")

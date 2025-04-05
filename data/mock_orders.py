@@ -1,7 +1,6 @@
 from f18asilversurfers.models.order_models import Order, BuyerSellerInfo, PostalAddress, ContactInfo, TaxInfo, DeliveryInfo, OrderLine
 
-MOCK_ORDERS = {
-    1: Order(
+MOCK_ORDERS = Order(
         order_id=1,
         buyer=BuyerSellerInfo(
             id="B12345",
@@ -82,4 +81,3 @@ MOCK_ORDERS = {
             sellers_item_id="S-LAP-999"
         )
     )
-}
