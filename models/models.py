@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, Float, Boolean, Date, Time, ForeignKey, Text, Numeric, create_engine
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
-from f18asilversurfers.database import Base
+from database import Base
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"  
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
