@@ -10,6 +10,7 @@ from database import init_db, SessionLocal
 from database import engine, SessionLocal
 from models import order_models
 from routes import order, despatch_advice
+import os
 
 
 
@@ -105,4 +106,5 @@ app.include_router(despatch_advice.router)
 
 # Run the app with uvicorn if this file is run directly
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    port = int(os.environ.get("PORT", 10000))  # fallback to 10000 locally
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
