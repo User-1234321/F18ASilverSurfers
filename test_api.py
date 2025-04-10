@@ -8,12 +8,29 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from main import app
 
+# -------------------------------
+# Test: GET /orders returns list of orders
+# -------------------------------
 def test_get_all_orders():
     with TestClient(app) as client:
         response = client.get("/orders")
         assert response.status_code == 200
         assert isinstance(response.json(), list)
         assert len(response.json()) > 0  # Should return at least one mock order
+
+# -------------------------------
+# Test: GET /orders contains a known mock order
+# -------------------------------
+def test_get_orders_contains_known_order():
+    with TestClient(app) as client:
+        response = client.get("/orders")
+        assert response.status_code == 200
+        orders = response.json()
+        assert any(order["id"] == 1 for order in orders)  # Confirm mock order with ID 1 exists
+
+# -------------------------------
+# Test: GET /order/{id} for known existing order
+# -------------------------------
 def test_get_order_valid():
     with TestClient(app) as client:
         order_id = 1
@@ -21,6 +38,9 @@ def test_get_order_valid():
         assert response.status_code == 200
         assert "id" in response.json()
 
+#  -------------------------------
+# Test: DELETE /despatch-advice/{id} twice 
+# -------------------------------
 def test_delete_existing_despatch_advice():
     """Test deleting an existing order (despatch advice)"""
     with TestClient(app) as client:
@@ -34,6 +54,9 @@ def test_delete_existing_despatch_advice():
         assert response.status_code == 404
         assert response.json() == {"detail": "Despatch advice not found"}
 
+# -------------------------------
+# Test: DELETE and GET consistency for same order
+# -------------------------------
 def test_delete_and_get():
     with TestClient(app) as client:
         order_id = 1
@@ -44,7 +67,9 @@ def test_delete_and_get():
         response = client.get(f"/order/{order_id}")
         assert response.status_code == 404
 
-        
+# -------------------------------
+# Test: POST /despatch-advice/{id} with valid payload returns XML
+# -------------------------------        
 import xml.etree.ElementTree as ET
 from fastapi.testclient import TestClient
 
@@ -97,3 +122,60 @@ def test_post_despadvice():
         assert root.find("quantity").text == "0"
         assert root.find("backorder").text == "0"
         assert root.find("reason").text == "string"
+
+# -------------------------------
+# Test: Accessing a non-existent API route
+# -------------------------------
+def test_invalid_route_access():
+    with TestClient(app) as client:
+        response = client.get("/not-a-real-endpoint")
+        assert response.status_code == 404
+
+# -------------------------------
+# Test: Method Not Allowed for GET-only route
+# -------------------------------
+def test_invalid_method_on_get_route():
+    with TestClient(app) as client:
+        response = client.post("/orders")
+        assert response.status_code == 405  # Method Not Allowed
+
+# -------------------------------
+# Test: Multiple GET /orders calls return same number of orders
+# -------------------------------
+def test_repeated_get_orders_consistency():
+    with TestClient(app) as client:
+        response1 = client.get("/orders")
+        response2 = client.get("/orders")
+        assert response1.status_code == 200
+        assert response2.status_code == 200
+        assert len(response1.json()) == len(response2.json())
+
+# -------------------------------
+# Test: GET /orders returns list of orders with expected fields
+# -------------------------------
+def test_get_orders_structure():
+    with TestClient(app) as client:
+        response = client.get("/orders")
+        assert response.status_code == 200
+        orders = response.json()
+        assert isinstance(orders, list)
+        if orders:
+            assert "id" in orders[0]
+            assert "sales_order_id" in orders[0]
+
+# -------------------------------
+# Test: POST /despatch-advice/{id} with quantity = 0
+# -------------------------------
+def test_post_despatch_advice_zero_quantity():
+    with TestClient(app) as client:
+        payload = {
+            "note": "Zero quantity test",
+            "despatch_advice_type": "Standard",
+            "fulfillment": "None",
+            "issue_date": "2025-04-10",
+            "quantity": 0,
+            "backorder": True,
+            "reason": "Out of stock"
+        }
+        response = client.post("/despatch-advice/1", json=payload)
+        assert response.status_code in [200]  # Acceptable or rejected depending on logic
