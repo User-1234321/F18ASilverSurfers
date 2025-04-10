@@ -4,6 +4,7 @@ import uuid
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 # from f18asilversurfers.add_mock import add_mock_order_to_db
 import uvicorn
 from database import init_db, SessionLocal
@@ -98,6 +99,14 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(order.router)
 app.include_router(despatch_advice.router)
