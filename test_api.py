@@ -178,4 +178,29 @@ def test_post_despatch_advice_zero_quantity():
             "reason": "Out of stock"
         }
         response = client.post("/despatch-advice/1", json=payload)
-        assert response.status_code in [200]  # Acceptable or rejected depending on logic
+        assert response.status_code in [200]  
+
+# -------------------------------
+# Test: POST /despatch-advice/{id} after deleting orders 2 & 3
+# -------------------------------
+def test_post_despatch_advice_after_multiple_deletes():
+    with TestClient(app) as client:
+        for order_id in [2, 3]:
+            # Step 1: Delete existing despatch advice
+            del_response = client.delete(f"/despatch-advice/{order_id}")
+            assert del_response.status_code == 204
+
+            # Step 2: Try to create despatch advice again
+            payload = {
+                "note": f"Reposting for ID {order_id}",
+                "despatch_advice_type": "Standard",
+                "fulfillment": "Full",
+                "issue_date": "2025-04-10",
+                "quantity": 5,
+                "backorder": False,
+                "reason": "Retry"
+            }
+            post_response = client.post(f"/despatch-advice/{order_id}", json=payload)
+            assert post_response.status_code == 404
+            assert post_response.json()["detail"] == "Order not found"
+
