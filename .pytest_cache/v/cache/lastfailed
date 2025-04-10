@@ -1,0 +1,3 @@
+{
+  "test_api.py::test_post_despatch_advice_rejects_extra_fields": true
+}
