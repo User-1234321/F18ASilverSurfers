@@ -164,6 +164,15 @@ def test_get_orders_structure():
             assert "sales_order_id" in orders[0]
 
 # -------------------------------
+# Test: GET /despatch_advices returns list of all despatch advices
+# -------------------------------
+def test_get_all_despatch_advices():
+    with TestClient(app) as client:
+        response = client.get("/despatch_advices")
+        assert response.status_code == 200
+        assert isinstance(response.json(), list)
+
+# -------------------------------
 # Test: POST /despatch-advice/{id} with quantity = 0
 # -------------------------------
 def test_post_despatch_advice_zero_quantity():
