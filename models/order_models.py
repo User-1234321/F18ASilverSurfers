@@ -27,3 +27,15 @@ class Order(Base):
     transaction_conditions_id = Column(Integer)
     anticipated_monetary_total_id = Column(Integer)
     order_line_id = Column(Integer)
+
+class DespatchAdviceDB(Base):
+    __tablename__ = "despatch_advice"
+
+    id = Column(Integer, primary_key=True, index=True)
+    note = Column(String)
+    despatch_advice_type = Column(String)
+    fulfillment = Column(String)
+    issue_date = Column(Date)
+    quantity = Column(Integer)
+    backorder = Column(Integer, nullable=True)
+    reason = Column(String, nullable=True)

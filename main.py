@@ -13,6 +13,8 @@ from models import order_models
 from routes import order, despatch_advice
 import os
 
+from routes import despatch
+
 
 
 # Drop and recreate the table to fix any schema issues
@@ -77,6 +79,28 @@ mock_orders = [
         'order_line_id': 24
     }
 ]
+mock_despatch_advices = [
+    {
+        'id': 1,
+        'note': 'Urgent despatch needed.',
+        'despatch_advice_type': 'Standard',
+        'fulfillment': 'Complete',
+        'issue_date': date(2025, 4, 6),
+        'quantity': 100,
+        'backorder': None,
+        'reason': 'Customer request'
+    },
+    {
+        'id': 2,
+        'note': 'Express despatch for VIP customer.',
+        'despatch_advice_type': 'Express',
+        'fulfillment': 'Partial',
+        'issue_date': date(2025, 4, 6),
+        'quantity': 50,
+        'backorder': 25,
+        'reason': 'VIP Priority'
+    }
+]
 
 
 @asynccontextmanager
@@ -89,6 +113,10 @@ async def lifespan(app: FastAPI):
             print("Starting app, inserting mock data")
 
             db.add(order_models.Order(**order))  # Add the mock orders to the session
+
+        for despatch_advice in mock_despatch_advices:
+            print("Starting app, inserting mock despatch advice data")
+            db.add(order_models.DespatchAdviceDB(**despatch_advice))
         db.commit()  # Commit changes to the database
         yield  # The app will run here
     finally:
@@ -110,6 +138,8 @@ app.add_middleware(
 
 app.include_router(order.router)
 app.include_router(despatch_advice.router)
+
+app.include_router(despatch.router)
 
 
 
