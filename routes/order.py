@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, FastAPI, HTTPException, Depends, Header, Request
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from models import order_models
+from models import the_models
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ def get_all_orders(
     db: Session = Depends(get_db)
 ):
     """fake shit for testing"""
-    orders = db.query(order_models.Order).all()
+    orders = db.query(the_models.Order).all()
     print(orders)
     return orders  # <== Add this
 
@@ -31,7 +31,7 @@ def get_all_orders(
 @router.get("/order/{order_id}")
 def get_order(order_id: int, db: Session = Depends(get_db)):
     """Fetch a single order by ID from the database"""
-    order = db.query(order_models.Order).filter(order_models.Order.id == order_id).first()  # Corrected here
+    order = db.query(the_models.Order).filter(the_models.Order.id == order_id).first()  # Corrected here
     if order:
         return order
     raise HTTPException(status_code=404, detail="Order not found")

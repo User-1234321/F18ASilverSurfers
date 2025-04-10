@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 from models.despatch_advice_models import DespatchAdvice
 from database import SessionLocal  # Ensure you're importing the database session
-from models import order_models
+from models import the_models
 from dicttoxml import dicttoxml
 from typing import Optional
 
@@ -24,7 +24,7 @@ def delete_despatch_advice(
     """Delete despatch advice for an order"""
     
     # Fetch the order from the database
-    order = db.query(order_models.Order).filter(order_models.Order.id == order_id).first()
+    order = db.query(the_models.Order).filter(the_models.Order.id == order_id).first()
 
     if not order:
         raise HTTPException(status_code=404, detail="Despatch advice not found")
@@ -44,7 +44,7 @@ def post_despatch_advice(
     """Post despatch advice for an order and return XML response"""
     
     # Fetch the order from the database
-    order = db.query(order_models.Order).filter(order_models.Order.id == order_id).first()
+    order = db.query(the_models.Order).filter(the_models.Order.id == order_id).first()
     
     if order:
         # Convert the order to a dictionary (you can manually map the attributes to avoid errors with SQLAlchemy objects)

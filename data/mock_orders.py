@@ -1,4 +1,4 @@
-from f18asilversurfers.models.order_models import Order, BuyerSellerInfo, PostalAddress, ContactInfo, TaxInfo, DeliveryInfo, OrderLine
+from models.the_models import Order, BuyerSellerInfo, PostalAddress, ContactInfo, TaxInfo, DeliveryInfo, OrderLine
 
 MOCK_ORDERS = Order(
         order_id=1,
