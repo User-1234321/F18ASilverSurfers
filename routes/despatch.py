@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, FastAPI, HTTPException, Depends, Header, Request
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from models import order_models
+from models import the_models
 
 router = APIRouter()
 
@@ -22,13 +22,13 @@ def get_all_despatch_advices(
     db: Session = Depends(get_db)
 ):
     """Fetch all despatch advices from the database"""
-    despatch_advices = db.query(order_models.DespatchAdviceDB).all()  # Query for despatch advice
+    despatch_advices = db.query(the_models.DespatchAdviceDB).all()  # Query for despatch advice
     return despatch_advices
 
 @router.get("/despatch_advice/{despatch_advice_id}")
 def get_despatch_advice(despatch_id: int, db: Session = Depends(get_db)):
     """Fetch a single despatch advice by ID from the database"""
-    despatch_advice = db.query(order_models.DespatchAdviceDB).filter(order_models.DespatchAdviceDB.id == despatch_id).first()
+    despatch_advice = db.query(the_models.DespatchAdviceDB).filter(the_models.DespatchAdviceDB.id == despatch_id).first()
     if despatch_advice:
         return despatch_advice
     raise HTTPException(status_code=404, detail="Despatch advice not found")
