@@ -8,6 +8,7 @@
   "test_api.py::test_invalid_method_on_get_route",
   "test_api.py::test_invalid_route_access",
   "test_api.py::test_post_despadvice",
+  "test_api.py::test_post_despatch_advice_after_multiple_deletes",
   "test_api.py::test_post_despatch_advice_rejects_extra_fields",
   "test_api.py::test_post_despatch_advice_zero_quantity",
   "test_api.py::test_repeated_get_orders_consistency",
