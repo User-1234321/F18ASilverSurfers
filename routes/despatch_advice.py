@@ -15,6 +15,26 @@ def get_db():
         yield db
     finally:
         db.close()
+        
+@router.delete("/despatch-advice/{order_id}", response_class=Response)
+def delete_despatch_advice(
+    order_id: int, 
+    db: Session = Depends(get_db)
+):
+    """Delete despatch advice for an order"""
+    
+    # Fetch the order from the database
+    order = db.query(order_models.Order).filter(order_models.Order.id == order_id).first()
+
+    if not order:
+        raise HTTPException(status_code=404, detail="Despatch advice not found")
+
+    db.delete(order)
+    db.commit()
+    
+    return Response(status_code=204)
+
+
 @router.post("/despatch-advice/{order_id}", response_class=Response)
 def post_despatch_advice(
     order_id: int, 
